@@ -1,0 +1,19 @@
+<div class="row" ng-controller="deviceController">
+    <div class="col-md-10 offset-md-1" >
+           <div class="row" ng-repeat="device in devices" >
+            <div class="col-md-4 offset-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top img-thumbnail" ng-src="{{device.img}}" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">
+                        MARCAR:{{device.name}}
+                    </p>
+                      <p class="card-text">
+                        DESC:{{device.desc}}
+                      </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

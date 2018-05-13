@@ -1,10 +1,10 @@
 /**
  * Controlador para gestionar el proceso de autencitación
  */
-app.controller('loginController', ['$scope', '$http', 'toastr', '$auth', function ($scope, $http, toastr, $auth) {
+app.controller('loginController', ['$scope', '$http', 'toastr', '$auth', '$rootScope', '$state','$timeout', function ($scope, $http, toastr, $auth, $rootScope, $state,$timeout) {
     $scope.login = {
-        email: ''
-        , password: ''
+        email: '',
+        password: ''
     };
     /**
      * funcion con la cual se hace el inicio de sesión con un usuario registrado desde la plataforma o la app
@@ -14,12 +14,16 @@ app.controller('loginController', ['$scope', '$http', 'toastr', '$auth', functio
             $http.post(API.endPoint + '/user/login', $scope.login).then(function (result) {
                 if (result.data.err) {
                     toastr.error(result.data.err, 'Error');
-                }
-                else {
+                } else {
                     let user = result.data.user;
                     localStorage.setItem('token', result.data.token);
                     localStorage.setItem('user', JSON.stringify(user));
-                    location.reload();
+                    $timeout(function () {
+                        $state.go('marcas');
+                        $rootScope.user=user;
+                        $rootScope.$apply();
+                    }, 100);
+
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -32,21 +36,27 @@ app.controller('loginController', ['$scope', '$http', 'toastr', '$auth', functio
      */
     $scope.authenticate = function (provider) {
         $auth.authenticate(provider).then(function (ok) {
-           $scope.fbLogin(ok)
+            $scope.fbLogin(ok)
         }).catch(function (err) {
-            
-            
-        });;
-        /*$auth.authenticate(provider)
-        */
+
+console.log(err);
+        });
     };
     
-    $scope.fbLogin = function(token){
-        $http.post(API.endPoint+'/user/facebookApp',token).then(function(resp){
+    $scope.fbLogin = function (token) {
+        $http.post(API.endPoint + '/user/facebookApp', token).then(function (resp) {
             console.log(resp);
-        }).catch(function(err){
+        }).catch(function (err) {
             console.log(er);
         });
     }
-    
+     $scope.$on('event:social-sign-in-success', (event, userDetails)=> {
+		$scope.result = userDetails;
+        console.log(userDetails);
+		$scope.$apply();
+	})
+	$scope.$on('event:social-sign-out-success', function(event, userDetails){
+		$scope.result = userDetails;
+	})
+
 }]);

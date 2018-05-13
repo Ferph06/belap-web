@@ -207,7 +207,9 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
 
         return true;
     }
-
+    /**
+     * funcion con la cual se crea una reparacion
+     */
     $scope.crearReparacion = function () {
         var dataRequest = {
             name: JSON.parse(localStrogre.getItem('user')).id,
@@ -240,12 +242,15 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         });
 
     };
-
+    /**
+     * funcion con la cual se quita o 
+     * @param {[[type]]} tarjeta [[Description]]
+     */
     $scope.agregarTarjetas = function (tarjeta) {
-        if ($scope.reparacion.tarjeta===tarjeta) {
-            
-        } 
-        $scope.reparacion.tarjeta=tarjeta;
+        if ($scope.reparacion.tarjeta === tarjeta) {
+
+        }
+        $scope.reparacion.tarjeta = tarjeta;
     };
 
 }]);

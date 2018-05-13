@@ -1,31 +1,42 @@
 <div ng-controller="loginController" class="col-md-12" ng-submit="iniciarSesion()">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-           <form id="formLogin" >
-                <div class="form-group row">
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" ng-model="login.email" placeholder="Email">
-                </div>
-              </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                      <input type="password" class="form-control" id="password" ng-model="login.password" placeholder="Password">
+    <div class="container" style="padding-top: 10px;">
+        <div class="row card w-90" style="padding-top: 10px;">
+            <div class="col-md-6 offset-md-3">
+                <form id="formLogin">
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" ng-model="login.email" placeholder="Email">
+                        </div>
                     </div>
-                  </div>
-               <div class="form-group row">
-                    <div class="col-sm-3 offset-md-4" >
-                      <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" ng-model="login.password" placeholder="Password">
+                        </div>
                     </div>
-                  </div>
-            </form>
-            <div class="form-group row" >
-                 <div class="col-sm-5 offset-md-1" >
-                     <button ng-click="authenticate('facebook')" class="btn " >Iniciar sesion con Facebook</button>
-                </div>
-                 <div class="col-sm-5" >
-                     <button ng-click="authenticate('google')" class="btn ">Iniciar sesion con Google</button>
+                    <div class="form-group row">
+                        <div class="col-sm-3 offset-md-4">
+                            <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group row">
+                    <div class="col-sm-4 ">
+                        <button ng-click="authenticate('facebook')" class="btn ">Iniciar sesion con Facebook
+                        <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
+                            <path fill="#000000" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+                        </svg>
+                    </button>
+                    </div>
+                    <div class="col-sm-5 offset-sm-2">
+                        <button ng-click="authenticate('google')" class="btn ">Iniciar sesion con Google 
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#000000" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+                        </svg>
+                    </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

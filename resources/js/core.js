@@ -1,14 +1,15 @@
-const app = angular.module('belap', ['ui.router', 'ngAnimate', 'toastr', 'satellizer']);
+const app = angular.module('belap', ['ui.router', 'ngAnimate', 'toastr', 'satellizer','socialLogin']);
 const API = {
     endPoint: 'http://localhost:1337/api/v1',
     endPointProd: 'https://belap-dev.herokuapp.com/api/v1',
     sess_id: OpenPay.deviceData.setup()
 }
-app.run(function ($rootScope) {
+app.run(function ($rootScope,$state) {
     $rootScope.user = JSON.parse(localStorage.getItem('user'));
+    
     $rootScope.cerrarSesion = function () {
        delete  $rootScope.user;
         localStorage.clear();
-        location.reload();
+        $state.go('login');
     }
 });

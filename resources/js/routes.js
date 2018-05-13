@@ -2,7 +2,7 @@
  * Configuracion de las rutas
  */
 app.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/login');
     
     $stateProvider.state('login', {
         url: '/login',

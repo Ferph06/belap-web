@@ -7,8 +7,6 @@ app.config(function ($authProvider) {
         },
     $authProvider.withCredentials = false;
     $authProvider.tokenRoot = null;
-    $authProvider.baseUrl = API.endPointProd;
-    $authProvider.loginUrl = '/user/login';
     
     $authProvider.facebook({
         clientId: '1689177774454452',
@@ -22,7 +20,7 @@ app.config(function ($authProvider) {
         name: 'facebook',
         url: '/auth/facebook',
         authorizationEndpoint: 'https://www.facebook.com/v2.5/dialog/oauth',
-        redirectUri: API.endPointProd + '/user/login',
+         
         requiredUrlParams: ['display', 'scope'],
         scope: ['email'],
         scopeDelimiter: ',',
@@ -38,7 +36,7 @@ app.config(function ($authProvider) {
     $authProvider.google({
         url: '/auth/google',
         authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
-        redirectUri: API.endPointProd + '/user/login',
+         
         requiredUrlParams: ['scope'],
         optionalUrlParams: ['display'],
         scope: ['profile', 'email'],
@@ -47,8 +45,8 @@ app.config(function ($authProvider) {
         display: 'popup',
         oauthType: '2.0',
         popupOptions: {
-            width: 452,
-            height: 633
+            width: 580,
+            height: 400
         }
     });
 });

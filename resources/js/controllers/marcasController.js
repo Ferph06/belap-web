@@ -15,7 +15,8 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         total: 0.0,
         tarjeta: '',
         extrasD: [],
-        reparacionD: []
+        reparacionD: [],
+        img: ''
     };
     $scope.dev = 'marca';
     /**
@@ -50,11 +51,9 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * funcion con la cual se obtiene las marcas disponibles 
      */
     var obtenerMarcas = function () {
-        var data = {}
-        console.log('inicia la peticion')
+        var data = {};
         $http.get(API.endPoint + '/catdevice').then(function (result) {
             $scope.marcas = result.data;
-            console.log(result.data);
             return data = result.data;
         }).catch(function (err) {
             toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
@@ -67,7 +66,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * funcion con la cual se entra al detalle de la marca donde contiene todos sus devices
      * @param {[[Array]]} device 
      */
-    $scope.verDevice = function (marca) {
+    $scope.elegirDevice = function (marca) {
         $scope.dev = 'device';
         $scope.devices = marca.devices;
         localStorage.setItem('marca', JSON.stringify(marca));
@@ -80,11 +79,12 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
     $scope.gregarExtras = function (device) {
         $scope.dev = 'extra';
         $scope.extras = device.extras;
+        $scope.reparacion.img = device.img;
         localStorage.setItem('extras', JSON.stringify(device));
     };
 
 
-    /**
+    /**;
      *funcion para regresar al anterior
      */
     $scope.quitarDevice = function () {
@@ -214,7 +214,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
             price: JSON.parse(localStorage.getItem('reparacion')).total,
             device: JSON.parse(localStorage.getItem('reparacion')).reparacionD.id
         }
-        $http.post(API.endPoint + 'Reparacion', dataRequest).then(function (result) {
+        $http.post(API.endPoint + '/Reparacion', dataRequest).then(function (result) {
             if (result.data.err) {
                 toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
             }
@@ -239,6 +239,13 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
             toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
         });
 
+    };
+
+    $scope.agregarTarjetas = function (tarjeta) {
+        if ($scope.reparacion.tarjeta===tarjeta) {
+            
+        } 
+        $scope.reparacion.tarjeta=tarjeta;
     };
 
 }]);

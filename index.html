@@ -1,18 +1,17 @@
 <html>
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
     </head>
     <header>
         
     </header>
-    <main ng-app="belap" class="container-fluid">
+    <body>
+     <main ng-app="belap" >
        <ng-menu></ng-menu>
-        <div ui-view></div>
+        <div ui-view class="container-fluid"></div>
     </main>
-    <footer>
-    </footer>
-   
+    </body>
     <script src="resources/js/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>

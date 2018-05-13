@@ -1,183 +1,122 @@
-<div ng-controller="marcasController">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Marcas</a></li>
-            <li class="breadcrumb-item"><a href="#">Devices</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Extras</li>
-            <li class="breadcrumb-item active" aria-current="page">Reparaciones</li>
-            <li class="breadcrumb-item active" aria-current="page">Detalle</li>
-        </ol>
-    </nav>
-    <div class="row" ng-repeat="marca in marcas" ng-show="dev==='marca'">
-        <div class="col-md-4 offset-md-4">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top img-thumbnail" ng-src="{{marca.img}}" alt="Card image cap">
-                <div class="card-body">
-
+<div class="row" ng-controller="marcasController" style="padding-top: 2px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" ng-show="dev==='marca'" ng-repeat="marca in marcas" style="padding-top: 8px;">
+                <div class="card w-80">
+                    <div class="card-header">
+                        {{marca.name}}
+                    </div>
+                    <div class="card-body ">
+                        <p class="card-text"> {{marca.desc}}</p>
+                    </div>
+                    <div class="col-sm-4 offset-sm-4">
+                        <img class="card-img-top" ng-src="{{marca.img}}" />
+                    </div>
+                    <div class="card-footer text-muted bg-primary ">
+                        <button class="btn btn-secondary cyan" ng-click="elegirDevice(marca)">Elegir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" ng-repeat="device in devices" ng-show="dev==='device'">
+                <div class=" card w-80">
+                    <div class="card-header">
+                        {{device.name}}
+                    </div>
+                    <div class="card-body ">
+                        <p class="card-text"> {{device.desc}}</p>
+                    </div>
+                    <div class="col-sm-4 offset-sm-4">
+                        <img class="card-img-top" ng-src="{{device.img}}" />
+                    </div>
+                    <div class="card-footer text-muted bg-primary">
+                        <button class="btn btn-secondary" ng-click="gregarExtras(device)">Elegir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cold-md-4 offset-md-4" ng-show="dev==='extra'" style="padding-top: 8px;">
+                <div class="card w-80" style="width: 18rem;">
+                    <form class="form-group" ng-repeat="extra in extras">
+                        <div class="col-auto my-1">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="extra{{$index}}" ng-click="agregarExtras(extra)">
+                                <label class="custom-control-label" for="extra{{$index}}">{{extra.name}}</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <label for="notas-1">Notas adicionales</label>
+                        <textarea class="form-control" id="notas-1" rows="3" placeholder="Notas adicionales"></textarea>
+                    </div>
                     <div class="form-group row">
-                        <div class="col-md-4 offset-md-5">
-                            <button class="btn btn-second" type="submit" ng-click="verDevice(marca)">Ver</button>
+                        <div class="col-md-4 offset-md-4">
+                            <button class="btn btn-primary" type="submit" ng-click="obtenerReraciones()">Siguiente</button>
                         </div>
+
                     </div>
-                    <p class="card-text">
-                        MARCAR:{{marca.name}}
-                    </p>
-                    <p class="card-text">
-                        DESC:{{marca.desc}}
-                    </p>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row" ng-repeat="device in devices" ng-show="dev==='device'">
-        <div class="col-md-2">
-            <button class="btn btn-second" type="submit" ng-click="quitarDevice()">Regresar</button>
-        </div>
-        <div class="col-md-4 offset-md-2">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top img-thumbnail" ng-src="{{device.img}}" alt="Card image cap">
-                <div class="card-body">
-
+            <div class="col-md-4 offset-md-4" ng-show="dev==='reparacion'" style="padding-top: 8px;">
+                <div class="card" style="width: 18rem;">
+                    <form class="form-group" ng-repeat="rep in reparaciones">
+                        <div class="col-auto my-1">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
+                                <label class="custom-control-label" for="rparacion-{{$index}}">{{rep.price | currency}} {{rep.name}}</label>
+                            </div>
+                        </div>
+                    </form>
                     <div class="form-group row">
-                        <div class="col-md-4 offset-md-5">
-                            <button class="btn btn-second" type="submit" ng-click="gregarExtras(device)">Agregar extras</button>
-                        </div>
-                    </div>
-                    <p class="card-text">
-                        MARCAR:{{device.name}}
-                    </p>
-                    <p class="card-text">
-                        DESC:{{device.desc}}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-repeat="device in devices" ng-show="dev==='extra'">
-        <div class="col-md-2">
-            <button class="btn btn-second" type="submit" ng-click="quitarDevice()">Regresar</button>
-        </div>
-        <div class="col-md-4 offset-md-2">
-
-            <div class="card" style="width: 18rem;">
-                <form class="form-group" ng-repeat="extra in extras">
-                    <div class="col-auto my-1">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" id="extra{{$index}}" ng-click="agregarExtras(extra)">
-                            <label class="custom-control-label" for="extra{{$index}}">{{extra.name}}</label>
-                        </div>
-                    </div>
-                </form>
-                <div class="form-group">
-                    <label for="notas-{{$index}}">Notas adicionales</label>
-                    <textarea class="form-control" id="notas-{{$index}}" rows="3" placeholder="Notas adicionales"></textarea>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-4 offset-md-4">
-                        <button class="btn btn-primary" type="submit" ng-click="obtenerReraciones()">Siguiente</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-show="dev==='reparacion' ">
-        <div class="col-md-2">
-            <button class="btn btn-second" type="submit" ng-click="quitarDevice()">Regresar</button>
-        </div>
-        <div class="col-md-4 offset-md-2">
-            <div class="card" style="width: 18rem;">
-                <form class="form-group" ng-repeat="rep in reparaciones">
-                    <div class="col-auto my-1">
-                        <div class="custom-control custom-checkbox mr-sm-2">
-                            <input type="checkbox" class="custom-control-input" ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
-                            <label class="custom-control-label" for="rparacion-{{$index}}">{{rep.price | currency}} {{rep.name}}</label>
-                        </div>
-                    </div>
-                </form>
-                <div class="form-group row">
-                    <div class="col-md-4 offset-md-4">
-                        <button class="btn btn-primary" type="submit" ng-click="obtenerTarjetas()">Siguiente</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-show="dev==='detail'">
-        <div class="col-md-12">
-            <div class="card ">
-                <img class="card-img-top img-thumbnail" ng-src="" alt="Card image cap">
-                <div class="card-body">
-                    <h3 class="card-text">Extras</h3>
-                    <div class="row">
-                        <div class="col-md-3 offset-md-1" ng-repeat="extra in reparacion.extrasD">
-                            <p>{{extra.name}}</p>
+                        <div class="col-md-4 offset-md-4">
+                            <button class="btn btn-primary" type="submit" ng-click="obtenerTarjetas()">Siguiente</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-body">
-                    <h5 class="card-title">Reparacion</h5>
-                    <div class="row">
-                        <div class="col-md-3 offset-md-1" ng-repeat="rep in reparacion.reparacionD">
-                            <p>{{rep.name}}</p>
-                        </div>
-                    </div>
+        <div class="cold-md-12" ng-show="dev==='detail'" style="padding-top: 8px;">
+            <div class="card w-80">
+                <div class="card-header">
+                    {{reparacion.reparacionD[0].device.name}}
                 </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-body">
-                    <h5 class="card-title">Datos de recolección</h5>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="datos" class="form-group">
-
-                            </form>
-                        </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img class="card-img-top" ng-src="{{reparacion.img}}" />
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-body">
-                    <h5 class="card-title">Mis tarjetas</h5>
-                    <div class="row" style="margin-top: -45px;">
-                        <div class="col-md-2 offset-md-10">
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#modalCard">Agregar</button>
-                        </div>
+                    <div class="col-sm-3 offset-1">
+                        <h4 class="card-text">Extras</h4>
+                        <p ng-repeat="extra in reparacion.extrasD">
+                            {{extra.name}}
+                        </p>
                     </div>
-                    <div>
+                    <div class="col-sm-4 offset-sm-1">
+                        <h4 class="card-text">Reparacion(es)</h4>
+                        <p ng-repeat="rep in reparacion.reparacionD">{{rep.name}}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4 class="card-text">Datos de recolección</h4>
+                    </div>
+                    <div class="col-sm-5 offset-sm-1">
+                        <h4 class="card-text">Tarjetas</h4>
+                        <button class="btn btn-primary fab" data-toggle="modal" data-target="#modalCard">+</button>
                         <form class="form-group" ng-repeat="tarjeta in tarjetas">
                             <div class="col-auto my-1">
                                 <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="rparacion-{{$index}}">
-                                    <label class="custom-control-label" for="rparacion-{{$index}}">{{tarjeta.card_openpay.card_number}} {{tarjeta.card_openpay.bank_name}}</label>
+                                    <input type="checkbox" class="custom-control-input" ng-click="agregarTarjetas(tarjeta.card_openpay.card_number)" id="reparacion-{{$index}}">
+                                    <label class="custom-control-label" for="reparacion-{{$index}}">{{tarjeta.card_openpay.card_number}} {{tarjeta.card_openpay.bank_name}}
+                                    </label>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-body">
-                    <h5 class="card-title">Total : {{reparacion.total | currency}}</h5>
+                <div class="card-footer">
+                    <b>Total : {{reparacion.total | currency}}</b>
+                    <button type="button"  class="btn btn-primary" style="margin-left: 12em;">Pagar</button>
                 </div>
             </div>
         </div>
-        <br/>
-        <div class="col-md-3 offset-md-5" style="padding-top: 8px;">
-            <button class="btn btn-primary" ng-click="crearReparacion()">Pagar</button>
-        </div>
-
     </div>
-    <div class="modal fade" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+     <div class="modal fade" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,21 +131,21 @@
                             <form id="formTarjeta" novalidate>
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.holder_name"  placeholder="Nombre Completo"  required />
+                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.holder_name" placeholder="Nombre Completo" required />
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.card_number"  placeholder="Numero de tarjeta"  required />
+                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.card_number" placeholder="Numero de tarjeta" required />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.cvv2"  placeholder="Codigo de seguridad "  required />
+                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.cvv2" placeholder="Codigo de seguridad " required />
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_month"  placeholder="Mes de expiración"  required />
+                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_month" placeholder="Mes de expiración" required />
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_year"  placeholder="Año de expiración"  required />
+                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_year" placeholder="Año de expiración" required />
                                     </div>
                                 </div>
                             </form>
@@ -219,6 +158,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
+</div>
 </div>

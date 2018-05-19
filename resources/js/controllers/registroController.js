@@ -21,7 +21,7 @@ app.controller('registroController', ['$scope', '$http', 'toastr', function ($sc
                 if (result.data.err) {
                     toastr.error(result.data.err, 'ERROR');
                 } else {
-                    console.log(result.data);
+                    toastr.success('Usuario registrado exitosamente','');
                 }
             }).catch(function (err) {
                 toastr.error('¡Ha ocurrido un error intentalo mas tarde!', 'Error');

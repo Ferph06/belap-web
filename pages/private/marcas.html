@@ -26,7 +26,7 @@
                         <form class="form-group" ng-repeat="extra in extras">
                             <div class="col-auto my-1">
                                 <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="extra{{$index}}" ng-click="agregarExtras(extra)">
+                                    <input type="checkbox"  id="extra{{$index}}" ng-click="agregarExtras(extra)">
                                     <label class="custom-control-label" for="extra{{$index}}">{{extra.name}}</label>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                         <form class="form-group" ng-repeat="rep in reparaciones">
                             <div class="col-auto my-1">
                                 <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
+                                    <input type="checkbox"  ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
                                     <label class="custom-control-label" for="rparacion-{{$index}}">{{rep.price | currency}} {{rep.name}}</label>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                             <form class="form-group" ng-repeat="tarjeta in tarjetas">
                                 <div class="col-auto my-1">
                                     <div class="custom-control custom-checkbox mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" ng-click="agregarNuevaTarjeta(tarjeta.card_openpay.card_number)" id="reparacion-{{$index}}">
+                                        <input type="checkbox"  ng-click="agregarNuevaTarjeta(tarjeta.card_openpay.card_number)" id="reparacion-{{$index}}">
                                         <label class="custom-control-label" for="reparacion-{{$index}}">{{tarjeta.card_openpay.card_number}} {{tarjeta.card_openpay.bank_name}}
                                     </label>
                                     </div>

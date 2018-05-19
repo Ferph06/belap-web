@@ -2,6 +2,11 @@
  * Controlador para el modulo relacionado con el pedido de reparaciones
  */
 app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scope, $http, toastr) {
+    $(function(){
+   $('.stepper').activateStepper({
+        autoFocusInput: true
+   });
+});
     $scope.marcas = {};
     $scope.devices = [];
     $scope.tarjeta = {
@@ -16,7 +21,14 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         tarjeta: '',
         extrasD: [],
         reparacionD: [],
-        img: ''
+        img: '',
+        adicionales: '',
+        datos_recoleccion: {
+            direccion: '',
+            fecha: '',
+            opcional: ''
+        }
+
     };
     $scope.dev = 'marca';
     /**
@@ -151,6 +163,11 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         }, 0);
     }
 
+    $scope.agregarNuevaTarjeta = function (tarjeta) {
+        $scope.reparacion.tarjeta = tarjeta;
+        localStorage.setItem('reparacion', JSON.stringify($scope.reparacion))
+    }
+
     /**
      * Metodo con la cual se agrega la tarjeta de credito
      */
@@ -212,34 +229,45 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      */
     $scope.crearReparacion = function () {
         var dataRequest = {
-            name: JSON.parse(localStrogre.getItem('user')).id,
+            name: JSON.parse(localStorage.getItem('user')).id,
             price: JSON.parse(localStorage.getItem('reparacion')).total,
             device: JSON.parse(localStorage.getItem('reparacion')).reparacionD.id
         }
-        $http.post(API.endPoint + '/Reparacion', dataRequest).then(function (result) {
-            if (result.data.err) {
+        var booleano = ($scope.reparacion.datos_recoleccion.direccion === '' && $scope.reparacion.datos_recoleccion.fecha === '');
+        console.log(booleano)
+        if (JSON.parse(localStorage.getItem('reparacion')).tarjeta !== '' && !booleano) {
+            $http.post(API.endPoint + '/Reparacion', dataRequest).then(function (result) {
+                if (result.data.err) {
+                    toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
+                }
+                $('#modalSucces').modal('show');
+                $scope.marcas = {};
+                $scope.devices = [];
+                $scope.tarjeta = {
+                    card_number: '',
+                    holder_name: '',
+                    expiration_year: '',
+                    expiration_month: '',
+                    cvv2: ''
+                };
+                $scope.reparacion = {
+                    total: 0.0,
+                    tarjeta: '',
+                    extrasD: [],
+                    reparacionD: []
+                };
+                obtenerMarcas();
+                localStorage.removeItem('reparacion');
+                localStorage.removeItem('marca');
+                localStorage.removeItem('extras');
+                $scope.dev = 'marca';
+                toastr.success('Reparación agregada con exito', '');
+            }).catch(function (err) {
                 toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
-            }
-            $scope.marcas = {};
-            $scope.devices = [];
-            $scope.tarjeta = {
-                card_number: '',
-                holder_name: '',
-                expiration_year: '',
-                expiration_month: '',
-                cvv2: ''
-            };
-            $scope.reparacion = {
-                total: 0.0,
-                tarjeta: '',
-                extrasD: [],
-                reparacionD: []
-            };
-            $scope.dev = 'marca';
-            toastr.success('Reparación agregada con exito', '');
-        }).catch(function (err) {
-            toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
-        });
+            });
+        } else {
+            toastr.info('Hace falta informar algunos datos,favor de verificar', '');
+        }
 
     };
     /**

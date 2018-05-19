@@ -21,7 +21,16 @@ app.controller('registroController', ['$scope', '$http', 'toastr', function ($sc
                 if (result.data.err) {
                     toastr.error(result.data.err, 'ERROR');
                 } else {
-                    toastr.success('Usuario registrado exitosamente','');
+                    toastr.success('Usuario registrado exitosamente', '');
+                    $scope.registro = {
+                        'name': '',
+                        'lastName': '',
+                        'email': '',
+                        'phone': '',
+                        'address': '',
+                        'password': '',
+                        'repassword': ''
+                    };
                 }
             }).catch(function (err) {
                 toastr.error('¡Ha ocurrido un error intentalo mas tarde!', 'Error');
@@ -36,11 +45,11 @@ app.controller('registroController', ['$scope', '$http', 'toastr', function ($sc
      */
     let validarContrasena = function (password, repassword) {
         if (password !== repassword) {
-            toastr.error('Las contraseñas no son iguales', 'Error');
+            toastr.error('Las contraseñas no son iguales,favor de verificar', 'Error');
             return false;
         }
         return true;
     }
-    
-   
+
+
 }]);

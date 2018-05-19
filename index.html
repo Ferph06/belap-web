@@ -1,40 +1,55 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
-    </head>
-    <header>
-        
-    </header>
-    <body>
-     <main ng-app="belap" >
-       <ng-menu></ng-menu>
+
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="resources/css/general.css">
+    <link rel="stylesheet" href="resources/css/materialize-stepper.css">
+    <!-- Materializecss compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import Materialize-Stepper CSS (after importing materialize.css) -->
+    <link rel="stylesheet" href="materialize-stepper.min.css">
+</head>
+<header>
+
+</header>
+
+<body>
+    <main ng-app="belap">
+        <ng-menu></ng-menu>
         <div ui-view class="container-fluid"></div>
     </main>
-    </body>
-    <script src="resources/js/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
-  <script src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
-    <script type="text/javascript">
-        OpenPay.setId('mk246xn6uoemmxk6uy9m');
-        OpenPay.setApiKey('pk_02a1aec9e6ee4dd199a798b524bc1ec1');
-        OpenPay.setSandboxMode(true);
-    </script>
-    <script src="resources/js/core.js"></script>
-    <script src="resources/js/routes.js"></script>
-    <script src="resources/js/auth.js"></script>
-    <script src="resources/js/directives/directives.js"></script>
-    <script src="resources/js/angular-ui-router.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/angularjs-social-login@2.6.1/angularjs-social-login.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" ></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" ></script>
-    <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
-    <!--Controller-->
-    <script src="resources/js/controllers/loginController.js"></script>
-    <script src="resources/js/controllers/registroController.js"></script>
-    <script src="resources/js/controllers/marcasController.js"></script>
-    <script src="resources/js/controllers/devicesController.js"></script>
+</body>
+<script src="resources/js/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
+<script src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
+<script type="text/javascript">
+    OpenPay.setId('mk246xn6uoemmxk6uy9m');
+    OpenPay.setApiKey('pk_02a1aec9e6ee4dd199a798b524bc1ec1');
+    OpenPay.setSandboxMode(true);
+
+</script>
+<script src="resources/js/core.js"></script>
+<script src="resources/js/routes.js"></script>
+<script src="resources/js/auth.js"></script>
+<script src="resources/js/directives/directives.js"></script>
+<script src="resources/js/angular-ui-router.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/angularjs-social-login@2.6.1/angularjs-social-login.min.js"></script>
+<script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+<script src="resources/js/materialize-stepper.js"></script>
+<!--Controller-->
+<script src="resources/js/controllers/loginController.js"></script>
+<script src="resources/js/controllers/registroController.js"></script>
+<script src="resources/js/controllers/marcasController.js"></script>
+<script src="resources/js/controllers/devicesController.js"></script>
+
 </html>

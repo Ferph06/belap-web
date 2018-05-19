@@ -2,8 +2,8 @@
  * Configuracion de las rutas
  */
 app.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/login');
-    
+    $urlRouterProvider.otherwise('login');
+
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: './pages/login.html',
@@ -15,10 +15,29 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     }).state('marcas', {
         url: '/marcas',
         templateUrl: './pages/private/marcas.html',
-        controller: 'marcasController'
+        controller: 'marcasController',
+        resolve: {
+            security: ['$q', function ($q) {
+                var booleano = JSON.parse(localStorage.getItem('user')) === undefined || JSON.parse(localStorage.getItem('user')) === null;
+                console.log(booleano)
+                if (booleano) {
+                    return $q.reject('');
+                }
+            }]
+        }
     }).state('devices', {
         url: '/devices',
         templateUrl: './pages/private/devices.html',
-        controller: 'deviceController'
+        controller: 'deviceController',
+        resolve: {
+            security: ['$q', function ($q) {
+                console.log(booleano)
+                var booleano = JSON.parse(localStorage.getItem('user')) === undefined || JSON.parse(localStorage.getItem('user')) === null;
+                if (booleano) {
+                    return $q.reject('');
+                }
+            }]
+        }
     });
+
 });

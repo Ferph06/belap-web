@@ -1,65 +1,102 @@
 <div class="row" ng-controller="marcasController" style="padding-top: 2px;">
+    <div class="desktop-progress-container" style="display: block;">
+        <div class="container desktop-progress-content">
+            <div class="row">
+                <div class="line"></div>
+                <div class="item col-sm-4">
+                    <div class="stepsInner text-center activeStep " id="stepU">
+                        <div class="stepCircle ">
+                            1
+                        </div>
+                        <p style="margin: 0 0 10px;">Dispositivo</p>
+                        <div>
+                            <div style="color: cornflowerblue;">{{devi.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item col-sm-4">
+                    <div class="stepsInner text-center defaultStep" id="stepD">
+                        <div class="stepCircle ">
+                            2
+                        </div>
+                        <p style="margin: 0 0 10px;">Defecto</p>
+                        <div>
+                            <div style="color: cornflowerblue;font-size: 0.9em;" ng-repeat="rep in devi.rep">{{rep.name}} <b style="color: black">Precio : {{rep.price | currency}}</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item col-sm-4">
+                    <div class="stepsInner text-center defaultStep" id=stepT"">
+                        <div class="stepCircle ">
+                            3
+                        </div>
+                        <p style="margin: 0 0 10px;">Datos de entrega</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
-        <div1 class="row">
+        <div class="row" style="padding-top: 100px;">
             <div class="col-md-4 divHover" ng-show="dev==='marca'" ng-repeat="marca in marcas" style="padding-top: 8px;">
-                <div class="card  tarjeta-sel"  ng-click="elegirDevice(marca)">
+                <div class="card  tarjeta-sel" ng-click="elegirDevice(marca)">
                     <div class="card-header primary">
                         {{marca.name}}
                     </div>
-                     <div class="col-sm-3 offset-sm-4 ">
+                    <div class="col-sm-3 offset-sm-4 ">
                         <img class="card-img-top " ng-src="{{marca.img}}" />
                     </div>
                 </div>
             </div>
-                <div class="col-md-4 divHover" ng-repeat="device in devices" ng-show="dev==='device'">
-                    <div class="card  tarjeta-sel" ng-click="gregarExtras(device)">
-                        <div class="card-header">
-                            {{device.name}}-{{device.desc}}
-                        </div>
-                        <div class="col-sm-3 offset-sm-4">
-                            <img class="card-img-top" ng-src="{{device.img}}" />
-                        </div>
+            <div class="col-md-4 divHover" ng-repeat="device in devices" ng-show="dev==='device'">
+                <div class="card  tarjeta-sel" ng-click="gregarExtras(device)">
+                    <div class="card-header">
+                        {{device.name}}-{{device.desc}}
+                    </div>
+                    <div class="col-sm-3 offset-sm-4">
+                        <img class="card-img-top" ng-src="{{device.img}}" />
                     </div>
                 </div>
-                <div class="cold-md-4 offset-md-4" ng-show="dev==='extra'" style="padding-top: 8px;">
-                    <div class="card w-80" style="width: 18rem;">
-                        <form class="form-group" ng-repeat="extra in extras">
-                            <div class="col-auto my-1">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="extra{{$index}}" ng-click="agregarExtras(extra)">
-                                    <label class="custom-control-label" for="extra{{$index}}">{{extra.name}}</label>
-                                </div>
+            </div>
+            <div class="cold-md-4 offset-md-4" ng-show="dev==='extra'" style="padding-top: 8px;">
+                <div class="card w-80" style="width: 18rem;">
+                    <form class="form-group" ng-repeat="extra in extras">
+                        <div class="col-auto my-1">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="extra{{$index}}" ng-click="agregarExtras(extra)">
+                                <label class="custom-control-label" for="extra{{$index}}">{{extra.name}}</label>
                             </div>
-                        </form>
-                        <div class="form-group">
-                            <label for="notas-1">Notas adicionales</label>
-                            <textarea class="form-control" id="notas-1" rows="3" placeholder="Notas adicionales" ng-model="reparacion.adicionales"></textarea>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-4 offset-md-4">
-                                <button class="btn btn-primary" type="submit" ng-click="obtenerReraciones()">Siguiente</button>
-                            </div>
+                    </form>
+                    <div class="form-group">
+                        <label for="notas-1">Notas adicionales</label>
+                        <textarea class="form-control" id="notas-1" rows="3" placeholder="Notas adicionales" ng-model="reparacion.adicionales"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 offset-md-4">
+                            <button class="btn btn-primary" type="submit" ng-click="obtenerReraciones()">Siguiente</button>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 offset-md-4" ng-show="dev==='reparacion'" style="padding-top: 8px;">
+                <div class="card" style="width: 18rem;">
+                    <form class="form-group" ng-repeat="rep in reparaciones">
+                        <div class="col-auto my-1">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
+                                <label class="custom-control-label" for="rparacion-{{$index}}">{{rep.price | currency}} {{rep.name}}</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-group row">
+                        <div class="col-md-4 offset-md-4">
+                            <button class="btn btn-primary" type="submit" ng-click="obtenerTarjetas()">Siguiente</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 offset-md-4" ng-show="dev==='reparacion'" style="padding-top: 8px;">
-                    <div class="card" style="width: 18rem;">
-                        <form class="form-group" ng-repeat="rep in reparaciones">
-                            <div class="col-auto my-1">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" ng-click="agregarReparacion(rep)" id="rparacion-{{$index}}">
-                                    <label class="custom-control-label" for="rparacion-{{$index}}">{{rep.price | currency}} {{rep.name}}</label>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="form-group row">
-                            <div class="col-md-4 offset-md-4">
-                                <button class="btn btn-primary" type="submit" ng-click="obtenerTarjetas()">Siguiente</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
             <div class="cold-md-8" ng-show="dev==='detail'" style="padding-top: 8px;">
                 <div class="card w-80">
                     <div class="card-header">
@@ -117,64 +154,65 @@
                     </div>
                 </div>
             </div>
-    </div>
-    <div class="modal fade" id="modalSucces" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header primary">
-                    <h5 class="modal-title" id="exampleModalLabel">Exito</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal fade" id="modalSucces" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header primary">
+                            <h5 class="modal-title" id="exampleModalLabel">Exito</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                </div>
-                <div class="modal-body">
-                    <p>Recuerda que para seguir su reparación debe hacerlo desde la App de Belap</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar tarjeta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-11 offset-md-1">
-                            <form id="formTarjeta" novalidate>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.holder_name" placeholder="Nombre Completo" required />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.card_number" placeholder="Numero de tarjeta" required />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.cvv2" placeholder="Codigo de seguridad " required />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_month" placeholder="Mes de expiración" required />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_year" placeholder="Año de expiración" required />
-                                    </div>
-                                </div>
-                            </form>
+                        </div>
+                        <div class="modal-body">
+                            <p>Recuerda que para seguir su reparación debe hacerlo desde la App de Belap</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" ng-click="agregarTarjeta()">Agregar</button>
+            </div>
+            <div class="modal fade" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar tarjeta</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-11 offset-md-1">
+                                    <form id="formTarjeta" novalidate>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" id="nombre" ng-model="tarjeta.holder_name" placeholder="Nombre Completo" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" id="nombre" ng-model="tarjeta.card_number" placeholder="Numero de tarjeta" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="nombre" ng-model="tarjeta.cvv2" placeholder="Codigo de seguridad " required />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_month" placeholder="Mes de expiración" required />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="nombre" ng-model="tarjeta.expiration_year" placeholder="Año de expiración" required />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" ng-click="agregarTarjeta()">Agregar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

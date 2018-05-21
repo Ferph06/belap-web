@@ -1,13 +1,16 @@
 /**
  * Controlador para el modulo relacionado con el pedido de reparaciones
  */
+'use strict';
+
+
 app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scope, $http, toastr) {
-    $(function(){
-   $('.stepper').activateStepper({
-        autoFocusInput: true
-   });
-});
     $scope.marcas = {};
+     $scope.devi={
+         name:'',
+         extras:[],
+         rep:[]
+     }
     $scope.devices = [];
     $scope.tarjeta = {
         card_number: '',
@@ -119,6 +122,8 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
             if (result.data.err) {
                 toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
             }
+           $scope.devi.name='';
+              $scope.devi.name= JSON.parse(localStorage.getItem('extras')).desc;
             $scope.dev = 'reparacion';
             result.data.push({
                 id: 0,
@@ -126,6 +131,12 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
                 name: 'Otra reparación'
             });
             $scope.reparaciones = result.data;
+            document.querySelector('#stepU').classList.add('completed');
+             document.querySelector('#stepU').classList.remove('activeStep')
+             document.querySelector('#stepU').classList.add('defaultStep');
+            document.querySelector('#stepD').classList.remove('defaultStep');
+            document.querySelector('#stepD').classList.add('activeStep');
+
         }).catch(function (err) {
             toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
         });
@@ -136,6 +147,8 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      */
     $scope.obtenerTarjetas = function () {
         localStorage.setItem('reparacion', JSON.stringify($scope.reparacion));
+         $scope.devi.rep=$scope.reparacion.reparacionD;
+       // $scope.dev.rep=;
         $scope.tarjetas = [];
         $http.get(API.endPoint + '/Tarjeta/getUserTarjetas/', {
             params: {
@@ -145,7 +158,6 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
             if (result.data.err) {
                 toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
             }
-            console.log(result.data)
             $scope.dev = 'detail';
             $scope.tarjetas = result.data;
         }).catch(function (err) {
@@ -270,15 +282,6 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         }
 
     };
-    /**
-     * funcion con la cual se quita o 
-     * @param {[[type]]} tarjeta [[Description]]
-     */
-    $scope.agregarTarjetas = function (tarjeta) {
-        if ($scope.reparacion.tarjeta === tarjeta) {
 
-        }
-        $scope.reparacion.tarjeta = tarjeta;
-    };
 
 }]);

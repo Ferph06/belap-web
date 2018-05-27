@@ -4,13 +4,13 @@
 'use strict';
 
 
-app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scope, $http, toastr) {
+app.controller('marcasController', ['$scope', '$http', 'toastr', function($scope, $http, toastr) {
     $scope.marcas = {};
-     $scope.devi={
-         name:'',
-         extras:[],
-         rep:[]
-     }
+    $scope.devi = {
+        name: '',
+        extras: [],
+        rep: []
+    }
     $scope.devices = [];
     $scope.tarjeta = {
         card_number: '',
@@ -38,39 +38,39 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * 
      * @param {[[type]]} extra [[Description]]
      */
-    $scope.agregarExtras = function (extra) {
-        if ($scope.reparacion.extrasD.includes(extra)) {
-            $scope.reparacion.extrasD = $scope.reparacion.extrasD.filter(function (el) {
-                return el.id !== extra.id;
-            })
-        } else {
-            $scope.reparacion.extrasD.push(extra);
+    $scope.agregarExtras = function(extra) {
+            if ($scope.reparacion.extrasD.includes(extra)) {
+                $scope.reparacion.extrasD = $scope.reparacion.extrasD.filter(function(el) {
+                    return el.id !== extra.id;
+                })
+            } else {
+                $scope.reparacion.extrasD.push(extra);
+            }
         }
-    }
-    /**
-     * 
-     * @param {[[type]]} reparacion [[Description]]
-     */
-    $scope.agregarReparacion = function (reparacion) {
-        if ($scope.reparacion.reparacionD.includes(reparacion)) {
-            $scope.reparacion.reparacionD = $scope.reparacion.reparacionD.filter(function (el) {
-                return el.id !== reparacion.id;
-            })
-        } else {
-            $scope.reparacion.reparacionD.push(reparacion);
+        /**
+         * 
+         * @param {[[type]]} reparacion [[Description]]
+         */
+    $scope.agregarReparacion = function(reparacion) {
+            if ($scope.reparacion.reparacionD.includes(reparacion)) {
+                $scope.reparacion.reparacionD = $scope.reparacion.reparacionD.filter(function(el) {
+                    return el.id !== reparacion.id;
+                })
+            } else {
+                $scope.reparacion.reparacionD.push(reparacion);
+            }
+            $scope.reparacion.total = calcularTotal($scope.reparacion.reparacionD);
+            console.log($scope.reparacion);
         }
-        $scope.reparacion.total = calcularTotal($scope.reparacion.reparacionD);
-        console.log($scope.reparacion);
-    }
-    /**
-     * funcion con la cual se obtiene las marcas disponibles 
-     */
-    var obtenerMarcas = function () {
+        /**
+         * funcion con la cual se obtiene las marcas disponibles 
+         */
+    var obtenerMarcas = function() {
         var data = {};
-        $http.get(API.endPoint + '/catdevice').then(function (result) {
+        $http.get(API.endPoint + '/catdevice').then(function(result) {
             $scope.marcas = result.data;
             return data = result.data;
-        }).catch(function (err) {
+        }).catch(function(err) {
             toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
         });
     };
@@ -81,7 +81,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * funcion con la cual se entra al detalle de la marca donde contiene todos sus devices
      * @param {[[Array]]} device 
      */
-    $scope.elegirDevice = function (marca) {
+    $scope.elegirDevice = function(marca) {
         $scope.dev = 'device';
         $scope.devices = marca.devices;
         localStorage.setItem('marca', JSON.stringify(marca));
@@ -91,7 +91,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * funcion donde se entra al detalle del device con el cual se muestran los extras
      * @param {[[type]]} device 
      */
-    $scope.gregarExtras = function (device) {
+    $scope.gregarExtras = function(device) {
         $scope.dev = 'extra';
         $scope.extras = device.extras;
         $scope.reparacion.img = device.img;
@@ -102,7 +102,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
     /**;
      *funcion para regresar al anterior
      */
-    $scope.quitarDevice = function () {
+    $scope.quitarDevice = function() {
         $scope.dev = 'marca';
         $scope.devices = [];
         localStorage.removeItem('marca');
@@ -111,19 +111,21 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
     /**
      * funcion con la cual se obtienen las reparaciones disponibles
      */
-    $scope.obtenerReraciones = function () {
+    $scope.obtenerReraciones = function() {
         localStorage.setItem('reparacion', JSON.stringify($scope.reparacion));
         $scope.reparaciones = [];
         $http.get(API.endPoint + '/Reparacion', {
             params: {
                 device: JSON.parse(localStorage.getItem('extras')).id
             }
-        }).then(function (result) {
+        }).then(function(result) {
             if (result.data.err) {
+                console.log(result.data.err)
                 toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
             }
-           $scope.devi.name='';
-              $scope.devi.name= JSON.parse(localStorage.getItem('extras')).desc;
+
+            $scope.devi.name = '';
+            $scope.devi.name = JSON.parse(localStorage.getItem('extras')).desc;
             $scope.dev = 'reparacion';
             result.data.push({
                 id: 0,
@@ -131,13 +133,10 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
                 name: 'Otra reparación'
             });
             $scope.reparaciones = result.data;
-            document.querySelector('#stepU').classList.add('completed');
-             document.querySelector('#stepU').classList.remove('activeStep')
-             document.querySelector('#stepU').classList.add('defaultStep');
-            document.querySelector('#stepD').classList.remove('defaultStep');
-            document.querySelector('#stepD').classList.add('activeStep');
+            cambiarEstado('primero');
 
-        }).catch(function (err) {
+        }).catch(function(err) {
+            console.log(err);
             toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
         });
     };
@@ -145,22 +144,24 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
     /**
      * funcion con la cual se obtiene la informacion de las tarjetas del usuario
      */
-    $scope.obtenerTarjetas = function () {
+    $scope.obtenerTarjetas = function() {
         localStorage.setItem('reparacion', JSON.stringify($scope.reparacion));
-         $scope.devi.rep=$scope.reparacion.reparacionD;
-       // $scope.dev.rep=;
+        $scope.devi.rep = $scope.reparacion.reparacionD;
+        // $scope.dev.rep=;
         $scope.tarjetas = [];
         $http.get(API.endPoint + '/Tarjeta/getUserTarjetas/', {
             params: {
                 id: JSON.parse(localStorage.getItem('user')).id
             }
-        }).then(function (result) {
+        }).then(function(result) {
             if (result.data.err) {
                 toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
             }
             $scope.dev = 'detail';
+            cambiarEstado('segundo');
             $scope.tarjetas = result.data;
-        }).catch(function (err) {
+        }).catch(function(err) {
+            console.log(err);
             toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
         });
     };
@@ -170,12 +171,12 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
      * @return {[[Int]]} [[Description]]
      */
     function calcularTotal(reparacion) {
-        return reparacion.reduce(function (b, e) {
+        return reparacion.reduce(function(b, e) {
             return parseInt(b) + parseInt(e.price);
         }, 0);
     }
 
-    $scope.agregarNuevaTarjeta = function (tarjeta) {
+    $scope.agregarNuevaTarjeta = function(tarjeta) {
         $scope.reparacion.tarjeta = tarjeta;
         localStorage.setItem('reparacion', JSON.stringify($scope.reparacion))
     }
@@ -183,63 +184,63 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
     /**
      * Metodo con la cual se agrega la tarjeta de credito
      */
-    $scope.agregarTarjeta = function () {
-        if (validarDatosTarjeta($scope.tarjeta)) {
-            OpenPay.token.create($scope.tarjeta, function (response) {
-                var dataRequest = {
-                    elputoid: JSON.parse(localStorage.getItem('user')).id,
-                    token: response.token,
-                    sess_id: API.sess_id
+    $scope.agregarTarjeta = function() {
+            if (validarDatosTarjeta($scope.tarjeta)) {
+                OpenPay.token.create($scope.tarjeta, function(response) {
+                    var dataRequest = {
+                        elputoid: JSON.parse(localStorage.getItem('user')).id,
+                        token: response.token,
+                        sess_id: API.sess_id
+                    }
+                    crearTarjeta(dataRequest);
+                }, function(response) {
+                    toastr.error("Ha ocurrido un error al registrar su tarjeta intente mas tarde o ingrese otra tarjeta ", 'Error');
+                });
+            }
+        }
+        /**
+         * metodo con el cual se crea la tarjeta de credito
+         * @param {[[type]]} data [[Description]]
+         */
+    var crearTarjeta = function(data) {
+            $http.post(API.endPoint + '/Tarjeta/crearTarjeta', data).then(function(result) {
+                if (result.data.err) {
+                    toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
+                    return;
                 }
-                crearTarjeta(dataRequest);
-            }, function (response) {
-                toastr.error("Ha ocurrido un error al registrar su tarjeta intente mas tarde o ingrese otra tarjeta ", 'Error');
+                $scope.obtenerTarjetas();
+                $scope.tarjeta = "";
+                $('.modal').hide();
+                toastr.success("Tarjeta agregada con exito", '');
+            }).catch(function(err) {
+                toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
             });
         }
-    }
-    /**
-     * metodo con el cual se crea la tarjeta de credito
-     * @param {[[type]]} data [[Description]]
-     */
-    var crearTarjeta = function (data) {
-        $http.post(API.endPoint + '/Tarjeta/crearTarjeta', data).then(function (result) {
-            if (result.data.err) {
-                toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
-                return;
+        /**
+         * funcion con la cual se valida los datos para  crear la tarjeta
+         * @param {[[type]]} data [[Description]]
+         * @return {[[type]]} [[Description]]
+         */
+    var validarDatosTarjeta = function(data) {
+            if (!OpenPay.card.validateCardNumber(data.card_number)) {
+                toastr.error('La tarjeta proporcionada es invalida', 'Error');
+                return false;
             }
-            $scope.obtenerTarjetas();
-            $scope.tarjeta = "";
-            $('.modal').hide();
-            toastr.success("Tarjeta agregada con exito", '');
-        }).catch(function (err) {
-            toastr.error("!UUPS OCURRIO UN ERROR", 'Error');
-        });
-    }
-    /**
-     * funcion con la cual se valida los datos para  crear la tarjeta
-     * @param {[[type]]} data [[Description]]
-     * @return {[[type]]} [[Description]]
-     */
-    var validarDatosTarjeta = function (data) {
-        if (!OpenPay.card.validateCardNumber(data.card_number)) {
-            toastr.error('La tarjeta proporcionada es invalida', 'Error');
-            return false;
-        }
-        if (!OpenPay.card.validateCVC(data.cvv2)) {
-            toastr.error('El codigo de seguridad proporcionado es invalido', 'Error');
-            return false;
-        }
-        if (!OpenPay.card.validateExpiry(data.expiration_month, data.expiration_year)) {
-            toastr.error('El año o el mes de expiración son invalido', 'Error');
-            return false;
-        }
+            if (!OpenPay.card.validateCVC(data.cvv2)) {
+                toastr.error('El codigo de seguridad proporcionado es invalido', 'Error');
+                return false;
+            }
+            if (!OpenPay.card.validateExpiry(data.expiration_month, data.expiration_year)) {
+                toastr.error('El año o el mes de expiración son invalido', 'Error');
+                return false;
+            }
 
-        return true;
-    }
-    /**
-     * funcion con la cual se crea una reparacion
-     */
-    $scope.crearReparacion = function () {
+            return true;
+        }
+        /**
+         * funcion con la cual se crea una reparacion
+         */
+    $scope.crearReparacion = function() {
         var dataRequest = {
             name: JSON.parse(localStorage.getItem('user')).id,
             price: JSON.parse(localStorage.getItem('reparacion')).total,
@@ -248,7 +249,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         var booleano = ($scope.reparacion.datos_recoleccion.direccion === '' && $scope.reparacion.datos_recoleccion.fecha === '');
         console.log(booleano)
         if (JSON.parse(localStorage.getItem('reparacion')).tarjeta !== '' && !booleano) {
-            $http.post(API.endPoint + '/Reparacion', dataRequest).then(function (result) {
+            $http.post(API.endPoint + '/Reparacion', dataRequest).then(function(result) {
                 if (result.data.err) {
                     toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
                 }
@@ -274,7 +275,7 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
                 localStorage.removeItem('extras');
                 $scope.dev = 'marca';
                 toastr.success('Reparación agregada con exito', '');
-            }).catch(function (err) {
+            }).catch(function(err) {
                 toastr.error('Ha ocurrido un error,favor de intentar mas tarde', 'Error');
             });
         } else {
@@ -282,6 +283,32 @@ app.controller('marcasController', ['$scope', '$http', 'toastr', function ($scop
         }
 
     };
+    /**
+     * Funcion con la cual se cambia el navbar correspondiente a el estado de la reparación
+     * @param {string} tipo 
+     */
+    var cambiarEstado = function(tipo) {
+        switch (tipo) {
+            case 'primero':
+                document.querySelector('#stepU').classList.add('completed');
+                document.querySelector('#stepU').classList.remove('activeStep')
+                document.querySelector('#stepU').classList.add('defaultStep');
+                document.querySelector('#stepD').classList.remove('defaultStep');
+                document.querySelector('#stepD').classList.add('activeStep');
+                break;
+
+            case 'segundo':
+                document.querySelector('#stepD').classList.add('completed');
+                document.querySelector('#stepD').classList.remove('activeStep')
+                document.querySelector('#stepD').classList.add('defaultStep');
+                document.querySelector('#stepT').classList.remove('defaultStep');
+                document.querySelector('#stepT').classList.add('activeStep');
+                break;
+            default:
+
+                break;
+        }
+    }
 
 
 }]);

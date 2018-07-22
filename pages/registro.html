@@ -1,44 +1,48 @@
- <div class="row" ng-controller="registroController" >
-     
-     <div class="col-md-5 offset-md-3">
-        <form  id="formRegistro" ng-submit="registrarForm()" novalidate >
-            <div class="form-group row">
-                <div class="col-md-5">
-                    <input type="text" class="form-control" id="nombre" ng-model="registro.name"  placeholder="Nombre"  required />
-                </div>
-                <div class="col-md-5 offset-md-2">
-                    <input type="text" class="form-control" id="app" ng-model="registro.lastName"  placeholder="Apellidos" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-5">
-                    <input type="text" class="form-control" id="tel" ng-model="registro.phone"  placeholder="Teléfono" required />
-                </div>
-                <div class="col-md-5 offset-md-2">
-                    <input type="text" class="form-control" id="dir" ng-model="registro.address"  placeholder="Dirección" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-5">
-                    <input type="password"  class="form-control" id="pas" placeholder="Contraseña" ng-model="registro.password" required />
-                </div>
-                <div  class="col-md-5 offset-md-2">
-                    <input type="password"  class="form-control" id="repas" placeholder="Confirmar Contraseña" ng-model="registro.repassword" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-6 offset-md-3">
-                    <input type="email" class="form-control" id="email" placeholder="Email" ng-model="registro.email" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-4 offset-md-5">
-                    <button class="btn btn-primary" type="submit" >Registrar</button>
-                </div>
-            </div>
-         <!--
+<div class="row" ng-controller="registroController">
+
+  <div class="col-md-5 offset-md-3 card mt-4">
+    <form id="formRegistro" ng-submit="registrarForm()" novalidate>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="nombre" ng-model="registro.name" placeholder="Nombre" required />
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="app" ng-model="registro.lastName" placeholder="Apellidos" required />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="tel" ng-model="registro.phone" placeholder="Teléfono" required />
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="dir" ng-model="registro.address" placeholder="Dirección" required />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <input type="password" class="form-control" id="pas" placeholder="Contraseña" ng-model="registro.password" required />
+        </div>
+        <div class="col-md-6">
+          <input type="password" class="form-control" id="repas" placeholder="Confirmar Contraseña" ng-model="registro.repassword"
+            required />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6 offset-md-3">
+          <input type="email" class="form-control" id="email" placeholder="Email" ng-model="registro.email" required />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12 d-flex flex-column align-items-center justify-content-center">
+          <button class="btn btn-primary" type="submit" ng-disabled="l">Registrar</button>
+        </div>
+        <div class="col-md-12 d-flex flex-column align-items-center justify-content-center login-loader" ng-if="l">
+          <img src="resources/loader.svg">
+        </div>
+      </div>
+      <!--
 'name', 'lastName', 'email', 'phone', 'address', 'password', 'repassword'
 -->
-        </form>
-     </div>
+    </form>
+  </div>
 </div>
